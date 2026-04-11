@@ -1,34 +1,35 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <nav class="navbar" th:fragment="navbar">
   <div class="container">
     <div class="navbar-brand">
-      <a class="navbar-item" href="http://localhost:8081/" th:href="@{/}">Inventory</a>
+      <a class="navbar-item" th:href="@{/}">Inventory</a>
     </div>
     <div class="navbar-menu is-active">
       <div class="navbar-start">
-        <a class="navbar-item" href="http://localhost:8081/" th:href="@{/}">Home</a>
-        <a class="navbar-item" href="http://localhost:8081/items" th:href="@{/items}">Items</a>
-        <a class="navbar-item" href="http://localhost:8081/suppliers" th:href="@{/suppliers}">Suppliers</a>
-        <a class="navbar-item" href="http://localhost:8081/categories" th:href="@{/categories}">Categories</a>
-        <a class="navbar-item" href="http://localhost:8081/customers" th:href="@{/customers}">Customers</a>
-        <a class="navbar-item" href="http://localhost:8081/receive" th:href="@{/receive}">Receive</a>
-        <a class="navbar-item" href="http://localhost:8081/issue" th:href="@{/issue}">Issue</a>
-        <a class="navbar-item" href="http://localhost:8081/reports/summary" th:href="@{/reports/summary}">Reports</a>
-        <a class="navbar-item" href="http://localhost:8081/analytics" th:href="@{/analytics}">Analytics</a>
+        <a class="navbar-item" th:href="@{/}">Home</a>
+        <a class="navbar-item" th:href="@{/items}">Items</a>
+        <a class="navbar-item" th:href="@{/suppliers}">Suppliers</a>
+        <a class="navbar-item" th:href="@{/categories}">Categories</a>
+        <a class="navbar-item" th:href="@{/customers}">Customers</a>
+        <a class="navbar-item" th:href="@{/receive}">Receive</a>
+        <a class="navbar-item" th:href="@{/issue}">Issue</a>
+        <a class="navbar-item" th:href="@{/reports/summary}">Reports</a>
+        <a class="navbar-item" th:href="@{/analytics}">Analytics</a>
       </div>
-    <div class="navbar-end">
-      <div class="navbar-item" th:if="${#request.remoteUser == null}">
-        <a class="navbar-item" th:href="@{/login}">Login</a>
-        <a class="navbar-item" th:href="@{/register}">Register</a>
-      </div>
-      <div class="navbar-item" th:if="${#request.remoteUser != null}">
-        <span th:text="${#request.remoteUser}">User</span>
-        <button type="button" class="button is-light" onclick="openLogoutModal()">Logout</button>
+      <div class="navbar-end">
+        <div class="navbar-item" sec:authorize="!isAuthenticated()">
+          <a class="navbar-item" th:href="@{/login}">Login</a>
+          <a class="navbar-item" th:href="@{/register}">Register</a>
+        </div>
+        <div class="navbar-item" sec:authorize="isAuthenticated()">
+          <span sec:authentication="name">User</span>
+          <button type="button" class="button is-light" onclick="openLogoutModal()">Logout</button>
+        </div>
       </div>
     </div>
-  </div>
   </div>
   <div id="logoutModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;z-index:1000;">
     <div style="background:#fff;padding:1rem;border-radius:6px;width:90%;max-width:420px;">
