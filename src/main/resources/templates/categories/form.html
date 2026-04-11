@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Category</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body class="section">
+<div th:replace="fragments/nav :: navbar"></div>
+<div class="container">
+    <h1 class="title">New Category</h1>
+    <form th:action="@{/categories}" th:object="${category}" method="post">
+        <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+                <input class="input" type="text" th:field="*{name}" required>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Description</label>
+            <div class="control">
+                <input class="input" type="text" th:field="*{description}">
+            </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link" type="submit">Save</button>
+            </div>
+            <div class="control">
+                <a class="button is-light" href="/categories">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

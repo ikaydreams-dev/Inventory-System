@@ -1,0 +1,34 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body class="section">
+<div th:replace="fragments/nav :: navbar"></div>
+<div class="container">
+    <h1 class="title">Summary Report</h1>
+    <form class="box" method="get" th:action="@{/reports/summary}">
+        <div class="columns">
+            <div class="column">
+                <label class="label">From</label>
+                <input class="input" type="date" name="from" th:value="${from}">
+            </div>
+            <div class="column">
+                <label class="label">To</label>
+                <input class="input" type="date" name="to" th:value="${to}">
+            </div>
+            <div class="column is-narrow" style="padding-top: 2rem;">
+                <button class="button is-link" type="submit">Apply</button>
+                <a class="button is-light" href="/">Home</a>
+            </div>
+        </div>
+    </form>
+    <div class="notification is-info">
+        <p><strong>Total Received:</strong> <span th:text="${received}">0</span></p>
+        <p><strong>Total Issued:</strong> <span th:text="${issued}">0</span></p>
+    </div>
+</div>
+</body>
+</html>

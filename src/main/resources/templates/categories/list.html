@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body class="section">
+<div th:replace="fragments/nav :: navbar"></div>
+<div class="container">
+    <h1 class="title">Categories</h1>
+    <div class="buttons">
+        <a class="button is-primary" href="/categories/new">New Category</a>
+        <a class="button" href="/">Home</a>
+    </div>
+    <table class="table is-fullwidth is-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${categories}">
+            <td th:text="${c.name}">Name</td>
+            <td th:text="${c.description}">Description</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
