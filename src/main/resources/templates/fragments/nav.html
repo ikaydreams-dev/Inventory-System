@@ -47,10 +47,8 @@
 
   <div class="sidebar-footer" sec:authorize="isAuthenticated()">
     <div class="sidebar-user">
-      <div class="sidebar-avatar">
-        <span sec:authentication="name" th:text="${#strings.substring(#authentication.name, 0, 1).toUpperCase()}">U</span>
-      </div>
-      <span class="sidebar-username" sec:authentication="name">User</span>
+      <div class="sidebar-avatar" th:text="${#authentication.name != null ? #authentication.name.substring(0,1).toUpperCase() : 'U'}">U</div>
+      <span class="sidebar-username" th:text="${#authentication.name}">User</span>
     </div>
     <button class="btn btn-ghost btn-sm btn-full" onclick="document.getElementById('logoutModal').classList.add('open')">
       Sign out

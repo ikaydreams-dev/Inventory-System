@@ -47,7 +47,10 @@ public class ItemController {
 
     @GetMapping("/new")
     public String createForm(Model model) {
-        model.addAttribute("item", new Item());
+        Item item = new Item();
+        item.setCategory(new Category());
+        item.setSupplier(new Supplier());
+        model.addAttribute("item", item);
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("suppliers", supplierRepository.findAll());
         return "items/form";
