@@ -1,52 +1,53 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>New Customer</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Store — StockBox</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-<body class="section">
+<body>
 <div th:replace="fragments/nav :: navbar"></div>
-<div class="container">
-    <h1 class="title">New Customer</h1>
+<div class="page-body">
+  <div class="page-header">
+    <div>
+      <div class="page-title">New Store</div>
+      <div class="page-sub">Add a retail store</div>
+    </div>
+    <a class="btn btn-ghost" th:href="@{/customers}">&#8592; Back</a>
+  </div>
+
+  <div class="form-card">
     <form th:action="@{/customers}" th:object="${customer}" method="post">
-        <div class="field">
-            <label class="label">Name</label>
-            <div class="control">
-                <input class="input" type="text" th:field="*{name}" required>
-            </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="fl">Store Name *</label>
+          <input class="fi" type="text" th:field="*{name}" placeholder="Store name" required autofocus>
         </div>
-        <div class="field">
-            <label class="label">Size</label>
-            <div class="control">
-                <div class="select is-fullwidth">
-                    <select th:field="*{size}" required>
-                        <option th:each="s : ${sizes}" th:value="${s}" th:text="${s}"></option>
-                    </select>
-                </div>
-            </div>
+        <div class="form-group">
+          <label class="fl">Size *</label>
+          <select class="fi" th:field="*{size}" required>
+            <option value="">Select size…</option>
+            <option th:each="s : ${sizes}" th:value="${s}" th:text="${s}"></option>
+          </select>
         </div>
-        <div class="field">
-            <label class="label">Phone</label>
-            <div class="control">
-                <input class="input" type="text" th:field="*{phone}">
-            </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="fl">Phone</label>
+          <input class="fi" type="text" th:field="*{phone}" placeholder="+1 555 000 0000">
         </div>
-        <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-                <input class="input" type="email" th:field="*{email}">
-            </div>
+        <div class="form-group">
+          <label class="fl">Email</label>
+          <input class="fi" type="email" th:field="*{email}" placeholder="store@example.com">
         </div>
-        <div class="field is-grouped">
-            <div class="control">
-                <button class="button is-link" type="submit">Save</button>
-            </div>
-            <div class="control">
-                <a class="button is-light" href="/customers">Cancel</a>
-            </div>
-        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Save Store</button>
+        <a class="btn btn-ghost" th:href="@{/customers}">Cancel</a>
+      </div>
     </form>
+  </div>
 </div>
 </body>
 </html>

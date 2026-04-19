@@ -1,34 +1,51 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Reports</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summary Report — StockBox</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-<body class="section">
+<body>
 <div th:replace="fragments/nav :: navbar"></div>
-<div class="container">
-    <h1 class="title">Summary Report</h1>
-    <form class="box" method="get" th:action="@{/reports/summary}">
-        <div class="columns">
-            <div class="column">
-                <label class="label">From</label>
-                <input class="input" type="date" name="from" th:value="${from}">
-            </div>
-            <div class="column">
-                <label class="label">To</label>
-                <input class="input" type="date" name="to" th:value="${to}">
-            </div>
-            <div class="column is-narrow" style="padding-top: 2rem;">
-                <button class="button is-link" type="submit">Apply</button>
-                <a class="button is-light" href="/">Home</a>
-            </div>
-        </div>
-    </form>
-    <div class="notification is-info">
-        <p><strong>Total Received:</strong> <span th:text="${received}">0</span></p>
-        <p><strong>Total Issued:</strong> <span th:text="${issued}">0</span></p>
+<div class="page-body">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Summary Report</div>
+      <div class="page-sub">Stock movement summary by date range</div>
     </div>
+  </div>
+
+  <div class="card" style="margin-bottom:24px;">
+    <div class="card-body">
+      <form method="get" th:action="@{/reports/summary}">
+        <div class="filter-bar">
+          <div class="form-group">
+            <label class="fl">From</label>
+            <input class="fi" type="date" name="from" th:value="${from}">
+          </div>
+          <div class="form-group">
+            <label class="fl">To</label>
+            <input class="fi" type="date" name="to" th:value="${to}">
+          </div>
+          <button class="btn btn-primary" type="submit" style="margin-bottom:0;">Apply Filter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="summary-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total Received</div>
+      <div class="stat-value green" th:text="${received}">0</div>
+      <div class="stat-hint">Units received in period</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Issued</div>
+      <div class="stat-value blue" th:text="${issued}">0</div>
+      <div class="stat-hint">Units dispatched in period</div>
+    </div>
+  </div>
 </div>
 </body>
 </html>

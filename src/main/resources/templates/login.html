@@ -1,41 +1,39 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — StockBox</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-<body class="section">
-<div class="container" style="max-width: 480px;">
-    <h1 class="title">Login</h1>
+<body class="auth-page">
+<div class="auth-box">
+  <div class="auth-logo">
+    <div class="auth-logo-mark">&#9712;</div>
+    <div class="auth-logo-name">Stock<span>Box</span></div>
+  </div>
+  <div class="auth-title">Welcome back</div>
+  <div class="auth-sub">Sign in to your account to continue</div>
 
-    <div th:if="${param.error}" class="notification is-danger">Invalid email or password.</div>
-    <div th:if="${param.logout}" class="notification is-info">You have been logged out.</div>
-    <div th:if="${success}" class="notification is-success" th:text="${success}"></div>
+  <div th:if="${param.error}" class="alert alert-danger">Invalid email or password. Please try again.</div>
+  <div th:if="${param.logout}" class="alert alert-info">You have been signed out successfully.</div>
+  <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
 
-    <form th:action="@{/login}" method="post">
-        <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-                <input class="input" type="email" name="email" placeholder="email@example.com" required>
-            </div>
-        </div>
-        <div class="field">
-            <label class="label">Password</label>
-            <div class="control">
-                <input class="input" type="password" name="password" placeholder="Password" required>
-            </div>
-        </div>
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        <div class="field is-grouped is-justify-content-space-between">
-            <div class="control">
-                <button class="button is-link" type="submit">Login</button>
-            </div>
-            <div class="control">
-                <a class="button is-text" th:href="@{/register}">Register</a>
-            </div>
-        </div>
-    </form>
+  <form th:action="@{/login}" method="post">
+    <div class="form-group">
+      <label class="fl" for="email">Email address</label>
+      <input class="fi" type="email" id="email" name="email" placeholder="you@example.com" required autofocus>
+    </div>
+    <div class="form-group">
+      <label class="fl" for="password">Password</label>
+      <input class="fi" type="password" id="password" name="password" placeholder="Your password" required>
+    </div>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button class="btn btn-primary btn-full" type="submit" style="margin-top:8px;">Sign in</button>
+  </form>
+  <div class="auth-footer">
+    Don't have an account? <a th:href="@{/register}">Create one</a>
+  </div>
 </div>
 </body>
 </html>

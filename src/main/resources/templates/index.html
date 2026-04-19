@@ -1,24 +1,55 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Inventory</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — StockBox</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-<body class="section">
+<body>
 <div th:replace="fragments/nav :: navbar"></div>
-<div class="container">
-    <h1 class="title">Inventory System</h1>
-    <div class="buttons">
-        <a class="button is-link" href="http://localhost:8081/items" th:href="@{/items}">Items</a>
-        <a class="button" href="http://localhost:8081/suppliers" th:href="@{/suppliers}">Suppliers</a>
-        <a class="button" href="http://localhost:8081/categories" th:href="@{/categories}">Categories</a>
-        <a class="button" href="http://localhost:8081/customers" th:href="@{/customers}">Customers</a>
-        <a class="button is-success" href="http://localhost:8081/receive" th:href="@{/receive}">Receive</a>
-        <a class="button is-warning" href="http://localhost:8081/issue" th:href="@{/issue}">Issue</a>
-        <a class="button is-info" href="http://localhost:8081/reports/summary" th:href="@{/reports/summary}">Reports</a>
-        
+<div class="page-body">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Dashboard</div>
+      <div class="page-sub">Quick overview and navigation</div>
     </div>
+  </div>
+
+  <div class="actions-grid" style="margin-bottom: 32px;">
+    <a class="action-tile" th:href="@{/items}">
+      <div class="action-tile-icon">&#9741;</div>
+      <div class="action-tile-label">Items</div>
+    </a>
+    <a class="action-tile" th:href="@{/categories}">
+      <div class="action-tile-icon">&#9783;</div>
+      <div class="action-tile-label">Categories</div>
+    </a>
+    <a class="action-tile" th:href="@{/suppliers}">
+      <div class="action-tile-icon">&#9954;</div>
+      <div class="action-tile-label">Suppliers</div>
+    </a>
+    <a class="action-tile" th:href="@{/customers}">
+      <div class="action-tile-icon">&#9749;</div>
+      <div class="action-tile-label">Stores</div>
+    </a>
+    <a class="action-tile" th:href="@{/receive}">
+      <div class="action-tile-icon">&#8595;</div>
+      <div class="action-tile-label">Receive Stock</div>
+    </a>
+    <a class="action-tile" th:href="@{/issue}">
+      <div class="action-tile-icon">&#8593;</div>
+      <div class="action-tile-label">Issue Stock</div>
+    </a>
+    <a class="action-tile" th:href="@{/reports/summary}">
+      <div class="action-tile-icon">&#9998;</div>
+      <div class="action-tile-label">Reports</div>
+    </a>
+    <a class="action-tile" th:href="@{/analytics}">
+      <div class="action-tile-icon">&#9656;</div>
+      <div class="action-tile-label">Analytics</div>
+    </a>
+  </div>
 </div>
 </body>
 </html>

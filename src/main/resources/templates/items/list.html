@@ -1,47 +1,59 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Items</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Items — StockBox</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-<body class="section">
+<body>
 <div th:replace="fragments/nav :: navbar"></div>
-<div class="container">
-    <h1 class="title">Items</h1>
-    <div class="buttons">
-        <a class="button is-primary" href="/items/new">New Item</a>
-        <a class="button" href="/">Home</a>
+<div class="page-body">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Items</div>
+      <div class="page-sub">All inventory items and their stock levels</div>
     </div>
-    <table class="table is-fullwidth is-striped">
-        <thead>
+    <a class="btn btn-primary" th:href="@{/items/new}">+ New Item</a>
+  </div>
+
+  <div class="table-card">
+    <div class="table-card-head">
+      <span class="table-card-title">Item List</span>
+    </div>
+    <table class="dt">
+      <thead>
         <tr>
-            <th>SKU</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Supplier</th>
-            <th>On Hand</th>
-            <th>Status</th>
+          <th>SKU</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Supplier</th>
+          <th>On Hand</th>
+          <th>Status</th>
         </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         <tr th:each="i : ${items}">
-            <td th:text="${i.sku}">SKU</td>
-            <td th:text="${i.name}">Name</td>
-            <td th:text="${i.category.name}">Category</td>
-            <td>
-                <span th:text="${i.supplier.name}">Supplier</span>
-                <div class="is-size-7" th:text="${i.supplier.phone}">Phone</div>
-                <div class="is-size-7" th:text="${i.supplier.email}">Email</div>
-            </td>
-            <td th:text="${stocks[i.id]}">0</td>
-            <td>
-                <span class="tag" th:classappend="${status[i.id]}=='LOW' ? ' is-danger' : (${status[i.id]}=='HIGH' ? ' is-warning' : ' is-success')"
-                      th:text="${status[i.id]}">OK</span>
-            </td>
+          <td><span style="font-family:monospace;font-size:12px;" th:text="${i.sku}"></span></td>
+          <td><strong th:text="${i.name}"></strong></td>
+          <td th:text="${i.category.name}"></td>
+          <td>
+            <div th:text="${i.supplier.name}"></div>
+            <div class="td-sub" th:text="${i.supplier.phone}"></div>
+          </td>
+          <td><strong th:text="${stocks[i.id]}">0</strong></td>
+          <td>
+            <span class="badge"
+              th:classappend="${status[i.id]} == 'LOW' ? 'badge-low' : (${status[i.id]} == 'HIGH' ? 'badge-high' : 'badge-ok')"
+              th:text="${status[i.id]}">OK</span>
+          </td>
         </tr>
-        </tbody>
+        <tr th:if="${#lists.isEmpty(items)}">
+          <td colspan="6" style="text-align:center;padding:32px;color:var(--muted);">No items yet. <a th:href="@{/items/new}" style="color:var(--accent);">Add the first one.</a></td>
+        </tr>
+      </tbody>
     </table>
+  </div>
 </div>
 </body>
 </html>

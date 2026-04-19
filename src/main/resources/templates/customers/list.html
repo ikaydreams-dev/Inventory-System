@@ -1,36 +1,48 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Customers</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stores — StockBox</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-<body class="section">
+<body>
 <div th:replace="fragments/nav :: navbar"></div>
-<div class="container">
-    <h1 class="title">Customers</h1>
-    <div class="buttons">
-        <a class="button is-primary" href="/customers/new">New Customer</a>
-        <a class="button" href="/">Home</a>
+<div class="page-body">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Stores</div>
+      <div class="page-sub">Retail stores that receive stock</div>
     </div>
-    <table class="table is-fullwidth is-striped">
-        <thead>
+    <a class="btn btn-primary" th:href="@{/customers/new}">+ New Store</a>
+  </div>
+
+  <div class="table-card">
+    <div class="table-card-head">
+      <span class="table-card-title">Store List</span>
+    </div>
+    <table class="dt">
+      <thead>
         <tr>
-            <th>Name</th>
-            <th>Size</th>
-            <th>Phone</th>
-            <th>Email</th>
+          <th>Name</th>
+          <th>Size</th>
+          <th>Phone</th>
+          <th>Email</th>
         </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         <tr th:each="c : ${customers}">
-            <td th:text="${c.name}">Name</td>
-            <td th:text="${c.size}">Size</td>
-            <td th:text="${c.phone}">Phone</td>
-            <td th:text="${c.email}">Email</td>
+          <td><strong th:text="${c.name}"></strong></td>
+          <td><span class="badge badge-blue" th:text="${c.size}"></span></td>
+          <td th:text="${c.phone}"></td>
+          <td th:text="${c.email}"></td>
         </tr>
-        </tbody>
+        <tr th:if="${#lists.isEmpty(customers)}">
+          <td colspan="4" style="text-align:center;padding:32px;color:var(--muted);">No stores yet. <a th:href="@{/customers/new}" style="color:var(--accent);">Add one.</a></td>
+        </tr>
+      </tbody>
     </table>
+  </div>
 </div>
 </body>
 </html>

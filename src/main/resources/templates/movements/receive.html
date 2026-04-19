@@ -1,62 +1,60 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Receive</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receive Stock — StockBox</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-<body class="section">
+<body>
 <div th:replace="fragments/nav :: navbar"></div>
-<div class="container">
-    <h1 class="title">Receive from Supplier</h1>
+<div class="page-body">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Receive Stock</div>
+      <div class="page-sub">Record incoming stock from a supplier</div>
+    </div>
+    <a class="btn btn-ghost" th:href="@{/items}">&#8592; Back to Items</a>
+  </div>
+
+  <div class="form-card">
     <form method="post" th:action="@{/receive}">
-        <div class="field">
-            <label class="label">Item</label>
-            <div class="control">
-                <div class="select is-fullwidth">
-                    <select name="itemId" required>
-                        <option th:each="i : ${items}" th:value="${i.id}" th:text="${i.name}"></option>
-                    </select>
-                </div>
-            </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="fl">Item *</label>
+          <select class="fi" name="itemId" required>
+            <option value="">Select item…</option>
+            <option th:each="i : ${items}" th:value="${i.id}" th:text="${i.name}"></option>
+          </select>
         </div>
-        <div class="field">
-            <label class="label">Supplier</label>
-            <div class="control">
-                <div class="select is-fullwidth">
-                    <select name="supplierId" required>
-                        <option th:each="s : ${suppliers}" th:value="${s.id}" th:text="${s.name}"></option>
-                    </select>
-                </div>
-            </div>
+        <div class="form-group">
+          <label class="fl">Supplier *</label>
+          <select class="fi" name="supplierId" required>
+            <option value="">Select supplier…</option>
+            <option th:each="s : ${suppliers}" th:value="${s.id}" th:text="${s.name}"></option>
+          </select>
         </div>
-        <div class="field">
-            <label class="label">Quantity</label>
-            <div class="control">
-                <input class="input" type="number" min="1" name="quantity" required>
-            </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="fl">Quantity *</label>
+          <input class="fi" type="number" min="1" name="quantity" placeholder="e.g. 50" required>
         </div>
-        <div class="field">
-            <label class="label">Reference</label>
-            <div class="control">
-                <input class="input" type="text" name="reference">
-            </div>
+        <div class="form-group">
+          <label class="fl">Date</label>
+          <input class="fi" type="date" name="date">
         </div>
-        <div class="field">
-            <label class="label">Date</label>
-            <div class="control">
-                <input class="input" type="date" name="date">
-            </div>
-        </div>
-        <div class="field is-grouped">
-            <div class="control">
-                <button class="button is-link" type="submit">Receive</button>
-            </div>
-            <div class="control">
-                <a class="button is-light" href="/items">Cancel</a>
-            </div>
-        </div>
+      </div>
+      <div class="form-group">
+        <label class="fl">Reference</label>
+        <input class="fi" type="text" name="reference" placeholder="Purchase order or delivery note number">
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-success" type="submit">&#8595; Receive Stock</button>
+        <a class="btn btn-ghost" th:href="@{/items}">Cancel</a>
+      </div>
     </form>
+  </div>
 </div>
 </body>
 </html>

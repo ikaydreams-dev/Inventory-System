@@ -2,52 +2,81 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
-<nav class="navbar" th:fragment="navbar">
-  <div class="container">
-    <div class="navbar-brand">
-      <a class="navbar-item" th:href="@{/}">Inventory</a>
+<aside class="sidebar" th:fragment="navbar">
+  <a class="sidebar-brand" th:href="@{/}">
+    <div class="sidebar-brand-icon">&#9712;</div>
+    <span class="sidebar-brand-name">Stock<span>Box</span></span>
+  </a>
+
+  <nav style="flex:1;">
+    <div class="sidebar-section-label">Main</div>
+    <a class="sidebar-link" th:href="@{/}">
+      <span class="sidebar-icon">&#8962;</span> Dashboard
+    </a>
+    <a class="sidebar-link" th:href="@{/items}">
+      <span class="sidebar-icon">&#9741;</span> Items
+    </a>
+    <a class="sidebar-link" th:href="@{/categories}">
+      <span class="sidebar-icon">&#9783;</span> Categories
+    </a>
+
+    <div class="sidebar-section-label">People</div>
+    <a class="sidebar-link" th:href="@{/suppliers}">
+      <span class="sidebar-icon">&#9954;</span> Suppliers
+    </a>
+    <a class="sidebar-link" th:href="@{/customers}">
+      <span class="sidebar-icon">&#9749;</span> Stores
+    </a>
+
+    <div class="sidebar-section-label">Movements</div>
+    <a class="sidebar-link" th:href="@{/receive}">
+      <span class="sidebar-icon">&#8595;</span> Receive
+    </a>
+    <a class="sidebar-link" th:href="@{/issue}">
+      <span class="sidebar-icon">&#8593;</span> Issue
+    </a>
+
+    <div class="sidebar-section-label">Reports</div>
+    <a class="sidebar-link" th:href="@{/reports/summary}">
+      <span class="sidebar-icon">&#9998;</span> Summary
+    </a>
+    <a class="sidebar-link" th:href="@{/analytics}">
+      <span class="sidebar-icon">&#9656;</span> Analytics
+    </a>
+  </nav>
+
+  <div class="sidebar-footer" sec:authorize="isAuthenticated()">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar">
+        <span sec:authentication="name" th:text="${#strings.substring(#authentication.name, 0, 1).toUpperCase()}">U</span>
+      </div>
+      <span class="sidebar-username" sec:authentication="name">User</span>
     </div>
-    <div class="navbar-menu is-active">
-      <div class="navbar-start">
-        <a class="navbar-item" th:href="@{/}">Home</a>
-        <a class="navbar-item" th:href="@{/items}">Items</a>
-        <a class="navbar-item" th:href="@{/suppliers}">Suppliers</a>
-        <a class="navbar-item" th:href="@{/categories}">Categories</a>
-        <a class="navbar-item" th:href="@{/customers}">Customers</a>
-        <a class="navbar-item" th:href="@{/receive}">Receive</a>
-        <a class="navbar-item" th:href="@{/issue}">Issue</a>
-        <a class="navbar-item" th:href="@{/reports/summary}">Reports</a>
-        <a class="navbar-item" th:href="@{/analytics}">Analytics</a>
-      </div>
-      <div class="navbar-end">
-        <div class="navbar-item" sec:authorize="!isAuthenticated()">
-          <a class="navbar-item" th:href="@{/login}">Login</a>
-          <a class="navbar-item" th:href="@{/register}">Register</a>
-        </div>
-        <div class="navbar-item" sec:authorize="isAuthenticated()">
-          <span sec:authentication="name">User</span>
-          <button type="button" class="button is-light" onclick="openLogoutModal()">Logout</button>
-        </div>
-      </div>
+    <button class="btn btn-ghost btn-sm btn-full" onclick="document.getElementById('logoutModal').classList.add('open')">
+      Sign out
+    </button>
+  </div>
+
+  <div class="sidebar-footer" sec:authorize="!isAuthenticated()">
+    <a class="btn btn-primary btn-sm btn-full" th:href="@{/login}">Sign in</a>
+  </div>
+</aside>
+
+<button class="mobile-nav-btn" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+
+<div id="logoutModal" class="modal-bg">
+  <div class="modal-box">
+    <div class="modal-title">Sign out</div>
+    <div class="modal-body">Are you sure you want to sign out?</div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="document.getElementById('logoutModal').classList.remove('open')">Cancel</button>
+      <form th:action="@{/logout}" method="post" style="margin:0;">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit" class="btn btn-danger">Sign out</button>
+      </form>
     </div>
   </div>
-  <div id="logoutModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);align-items:center;justify-content:center;z-index:1000;">
-    <div style="background:#fff;padding:1rem;border-radius:6px;width:90%;max-width:420px;">
-      <h3 style="margin:0 0 .5rem 0;">Confirm Logout</h3>
-      <p style="margin:0 0 1rem 0;">Are you sure you want to logout?</p>
-      <div style="display:flex;gap:.5rem;justify-content:flex-end;">
-        <form th:action="@{/logout}" method="post" style="margin:0;">
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          <button type="submit" class="button is-danger">Logout</button>
-        </form>
-        <button type="button" class="button" onclick="closeLogoutModal()">Cancel</button>
-      </div>
-    </div>
-  </div>
-  <script>
-    function openLogoutModal(){var m=document.getElementById('logoutModal');if(m){m.style.display='flex';}}
-    function closeLogoutModal(){var m=document.getElementById('logoutModal');if(m){m.style.display='none';}}
-  </script>
-</nav>
+</div>
+</aside>
 </body>
 </html>

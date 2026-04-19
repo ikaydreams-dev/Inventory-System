@@ -3,59 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Analytics</title>
+  <title>Analytics — StockBox</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <style>
-    .container{max-width:1100px;margin:1rem auto;padding:0 1rem}
-    .card{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:1rem}
-    .muted{color:#6b7280;font-size:.9rem}
-  </style>
 </head>
 <body>
-  <div th:replace="fragments/nav :: navbar"></div>
-  <div class="container">
-    <h2>Stock Status</h2>
-    <p class="muted">Green = OK, Yellow = Running Out, Red = Out of Stock</p>
-    <div class="card">
-      <canvas id="stockChart" height="180"></canvas>
+<div th:replace="fragments/nav :: navbar"></div>
+<div class="page-body">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Analytics</div>
+      <div class="page-sub">Visual overview of stock levels</div>
     </div>
   </div>
 
-  <script th:inline="javascript">
-    const labels = /*[[${labels}]]*/ [];
-    const values = /*[[${values}]]*/ [];
-    const colors = /*[[${colors}]]*/ [];
+  <div class="card" style="margin-bottom:16px;">
+    <div class="card-body">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap;">
+        <strong style="font-size:14px;">Stock Status Chart</strong>
+        <span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);">
+          <span style="width:10px;height:10px;border-radius:2px;background:#22c55e;display:inline-block;"></span> OK &nbsp;
+          <span style="width:10px;height:10px;border-radius:2px;background:#f59e0b;display:inline-block;"></span> Running Out &nbsp;
+          <span style="width:10px;height:10px;border-radius:2px;background:#ef4444;display:inline-block;"></span> Out of Stock
+        </span>
+      </div>
+      <div style="position:relative;height:300px;">
+        <canvas id="stockChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
 
-    const data = {
+<script th:inline="javascript">
+  const labels = /*[[${labels}]]*/ [];
+  const values = /*[[${values}]]*/ [];
+  const colors = /*[[${colors}]]*/ [];
+
+  new Chart(document.getElementById('stockChart'), {
+    type: 'bar',
+    data: {
       labels: labels,
       datasets: [{
-        label: 'Stock Status',
+        label: 'Stock Level',
         data: values,
         backgroundColor: colors,
-        borderColor: colors,
-        borderWidth: 1
+        borderRadius: 4,
+        borderSkipped: false
       }]
-    };
-
-    new Chart(
-      document.getElementById('stockChart'),
-      {
-        type: 'bar',
-        data: data,
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: { enabled: true }
-          },
-          scales: {
-            y: { display: false, suggestedMax: 1 },
-            x: { ticks: { autoSkip: false, maxRotation: 45, minRotation: 0 } }
-          }
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: true }
+      },
+      scales: {
+        y: { display: false, suggestedMin: 0, suggestedMax: 1 },
+        x: {
+          grid: { display: false },
+          ticks: { autoSkip: false, maxRotation: 45, minRotation: 0, font: { size: 11 } }
         }
       }
-    );
-  </script>
+    }
+  });
+</script>
 </body>
 </html>

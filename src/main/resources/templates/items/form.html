@@ -1,74 +1,76 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>New Item</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Item — StockBox</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
-<body class="section">
+<body>
 <div th:replace="fragments/nav :: navbar"></div>
-<div class="container">
-    <h1 class="title">New Item</h1>
+<div class="page-body">
+  <div class="page-header">
+    <div>
+      <div class="page-title">New Item</div>
+      <div class="page-sub">Add a new inventory item</div>
+    </div>
+    <a class="btn btn-ghost" th:href="@{/items}">&#8592; Back</a>
+  </div>
+
+  <div class="form-card">
     <form th:action="@{/items}" th:object="${item}" method="post">
-        <div class="field">
-            <label class="label">SKU (auto)</label>
-            <div class="control">
-                <input class="input" type="text" th:field="*{sku}" placeholder="Auto-generated after save" readonly>
-            </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="fl">SKU</label>
+          <input class="fi" type="text" th:field="*{sku}" placeholder="Auto-generated after save" readonly>
         </div>
-        <div class="field">
-            <label class="label">Name</label>
-            <div class="control">
-                <input class="input" type="text" th:field="*{name}" required>
-            </div>
+        <div class="form-group">
+          <label class="fl">Name *</label>
+          <input class="fi" type="text" th:field="*{name}" placeholder="Item name" required>
         </div>
-        <div class="field">
-            <label class="label">Category</label>
-            <div class="control">
-                <div class="select is-fullwidth">
-                    <select th:field="*{category.id}" required>
-                        <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
-                    </select>
-                </div>
-            </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="fl">Category *</label>
+          <select class="fi" th:field="*{category.id}" required>
+            <option value="">Select category…</option>
+            <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+          </select>
         </div>
-        <div class="field">
-            <label class="label">Supplier</label>
-            <div class="control">
-                <div class="select is-fullwidth">
-                    <select th:field="*{supplier.id}" required>
-                        <option th:each="s : ${suppliers}" th:value="${s.id}" th:text="${s.name}"></option>
-                    </select>
-                </div>
-            </div>
+        <div class="form-group">
+          <label class="fl">Supplier *</label>
+          <select class="fi" th:field="*{supplier.id}" required>
+            <option value="">Select supplier…</option>
+            <option th:each="s : ${suppliers}" th:value="${s.id}" th:text="${s.name}"></option>
+          </select>
         </div>
-        <div class="field">
-            <label class="label">Unit</label>
-            <div class="control">
-                <input class="input" type="text" th:field="*{unit}">
-            </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="fl">Unit</label>
+          <input class="fi" type="text" th:field="*{unit}" placeholder="e.g. pcs, kg, litre">
         </div>
-        <div class="field">
-            <label class="label">Reorder Level</label>
-            <div class="control">
-                <input class="input" type="number" min="0" th:field="*{reorderLevel}">
-            </div>
+        <div class="form-group">
+          <label class="fl">Unit Price</label>
+          <input class="fi" type="number" step="0.01" min="0" th:field="*{unitPrice}" placeholder="0.00">
         </div>
-        <div class="field">
-            <label class="label">Max Level</label>
-            <div class="control">
-                <input class="input" type="number" min="0" th:field="*{maxLevel}">
-            </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="fl">Reorder Level</label>
+          <input class="fi" type="number" min="0" th:field="*{reorderLevel}" placeholder="0">
         </div>
-        <div class="field is-grouped">
-            <div class="control">
-                <button class="button is-link" type="submit">Save</button>
-            </div>
-            <div class="control">
-                <a class="button is-light" href="/items">Cancel</a>
-            </div>
+        <div class="form-group">
+          <label class="fl">Max Level</label>
+          <input class="fi" type="number" min="0" th:field="*{maxLevel}" placeholder="0">
         </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Save Item</button>
+        <a class="btn btn-ghost" th:href="@{/items}">Cancel</a>
+      </div>
     </form>
+  </div>
 </div>
 </body>
 </html>
